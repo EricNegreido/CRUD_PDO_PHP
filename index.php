@@ -43,6 +43,12 @@
       max-width:180px;
     }
   </style>
+
+  <?php 
+    inlcude("conexion.php"); 
+    $registros = $base-> query("SELECT * FROM DATOS_USUARIOS")-> fetchAll (PDO::FETCH_OBJ); // $registro tendra un array de objetos
+
+  ?>
 </head>
 <body>
   <form action="">
