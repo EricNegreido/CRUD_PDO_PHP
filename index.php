@@ -5,67 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    form{
-      display:flex;
+    body{
       width: 80%;
-      gap:5px;
+      margin: 0 auto;
     }
-    .items{
+    .etiqueta{
       display:flex;
-      flex-direction:column;
-      width:50%;
-      max-width: 250px;
+      flex-direction:row;
+
+    }
+    label{
+      display: block;
+      width: 120px;
+    }
+    .registro, .items{
+      display:flex;
+      flex-direction:row;
     }
     input{
       border:none;
       background: #eee;
       box-shadow: #222 0px 1px 3px;
-      width:90%;
-      max-width: 300px;
-    }
-    .buttons{
-      width: 40%;
-      display: flex;
-      flex-direction: column;
-      max-width: 300px;
-
-
+      width: 120px;
+      margin: 2px
     }
     .btn{
-      margin: 2px;
       background: #33f;
       box-shadow: none;
       border-radius: 5px;
       color: #fff;
       font-weight: bold;
-      height:30px;
-      width:40%;
-      max-width:180px;
+      height:20px;
+      width:100px;
     }
   </style>
 
   <?php 
-    inlcude("conexion.php"); 
-    $registros = $base-> query("SELECT * FROM DATOS_USUARIOS")-> fetchAll (PDO::FETCH_OBJ); // $registro tendra un array de objetos
+    include("conexion.php"); 
+    $registros = $base->query("SELECT * FROM datos_usuarios")->fetchAll(PDO::FETCH_OBJ); // $registro tendra un array de objetos
 
   ?>
 </head>
 <body>
   <form action="">
-    <section class="items">
+    <section class="etiqueta">
       <label for="nombre"> Nombre </label>
-      <input type="text" name="nombre" value="nombre">
       <label for="apellido"> Apellido </label>
-      <input type="text" name="apellido" value="apellido">
       <label for="direccion"> Direccion </label>
-      <input type="text" name="direccion" value="direccion">
     </section>
-    <section class="buttons">
-      <input class="btn" type="button" value="Crear">
-      <input class="btn" type="button" value="Borrar">
-      <input class="btn" type="button" value="Actualizar">
-      <input class="btn" type="button" value="Buscar">
-    </section>  
+    <section class="items">
+      <input type="text" name="nombre" value="nombre">
+      <input type="text" name="apellido" value="apellido">
+      <input type="text" name="direccion" value="direccion">
+      <section class="buttons">
+        <input class="btn" type="button" value="Crear">
+      </section>  
+    </section>
+    
   </form>
+ <?php foreach ($registros as $usuario):?>
+  <section class="registro">
+    <input type="text" name="nombre" value= "<?php echo $usuario->nombre?>">
+    <input type="text" name="apellido" value= "<?php echo $usuario->apellido?>">
+    <input type="text" name="direccion" value= "<?php echo $usuario->direccion?>">
+    <a href="borrar.php?id=<?php echo $usuario->id?>"><input class="btn" type="button" value="Borrar"></a>
+    <input class="btn" type="button" value="Actualizar">
+  </section>
+ <?php endforeach ?>
+
 </body>
 </html>
