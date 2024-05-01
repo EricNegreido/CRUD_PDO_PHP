@@ -54,7 +54,7 @@
   ?>
 </head>
 <body>
-  <form action="">
+  <form action="insertar.php" method="POST">
     <section class="etiqueta">
       <label for="nombre"> Nombre </label>
       <label for="apellido"> Apellido </label>
@@ -65,7 +65,7 @@
       <input type="text" name="apellido" value="apellido">
       <input type="text" name="direccion" value="direccion">
       <section class="buttons">
-        <input class="btn" type="button" value="Crear">
+        <input class="btn" type="submit" value="Crear">
       </section>  
     </section>
     

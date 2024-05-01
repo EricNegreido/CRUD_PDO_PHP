@@ -6,6 +6,16 @@
   $ape = $_POST["apellido"];
   $dir = $_POST["direccion"];
 
-  $base->query("UPDATE datos_usuarios SET nombre='$nom', apellido='$ape', direccion='$dir' WHERE id='$id'");
+  // permite inyeccion
+  // $base->query("UPDATE datos_usuarios SET nombre='$nom', apellido='$ape', direccion='$dir' WHERE id='$id'");
+  // header("Location:index.php");
+
+  $sql = ("UPDATE datos_usuarios SET nombre=:nom, apellido=:ape, direccion=:dir WHERE id=:id");
+
+  $resultados = $base->prepare($sql);
+
+  $resultados->execute(array(":id"=>$id, ":nom"=>$nom, ":ape"=>$ape, ":dir"=>$dir));
   header("Location:index.php");
+
+
 ?>
