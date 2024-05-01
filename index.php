@@ -29,6 +29,13 @@
       width: 120px;
       margin: 2px
     }
+    div{
+      border:none;
+      background: #eee;
+      box-shadow: #222 0px 1px 3px;
+      width: 125px;
+      margin: 2px
+    }
     .btn{
       background: #33f;
       box-shadow: none;
@@ -65,11 +72,11 @@
   </form>
  <?php foreach ($registros as $usuario):?>
   <section class="registro">
-    <input type="text" name="nombre" value= "<?php echo $usuario->nombre?>">
-    <input type="text" name="apellido" value= "<?php echo $usuario->apellido?>">
-    <input type="text" name="direccion" value= "<?php echo $usuario->direccion?>">
+    <div><?php echo $usuario->nombre?></div>
+    <div><?php echo $usuario->apellido?></div>
+    <div><?php echo $usuario->direccion?></div>
     <a href="borrar.php?id=<?php echo $usuario->id?>"><input class="btn" type="button" value="Borrar"></a>
-    <input class="btn" type="button" value="Actualizar">
+    <a href="editar.php?id=<?php echo $usuario->id?>&nom=<?php echo $usuario->nombre?>&ape=<?php echo $usuario->apellido?> & dir='<?php echo $usuario->direccion?>'"> <input class="btn" type="button" value="Actualizar"></a>
   </section>
  <?php endforeach ?>
 
