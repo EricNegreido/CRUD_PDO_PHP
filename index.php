@@ -48,9 +48,9 @@
   </style>
 
   <?php 
-    include("conexion.php"); 
-    $registros = $base->query("SELECT * FROM datos_usuarios")->fetchAll(PDO::FETCH_OBJ); // $registro tendra un array de objetos
-
+    include("conexion.php");      
+    $registros = $base->query("SELECT * FROM datos_usuarios LIMIT 0,3")->fetchAll(PDO::FETCH_OBJ); // $registro tendra un array de objetos
+    //LIMIT 0, 3 Permite decidir cuanto elementos recupera la consulta siendo 0 la primero posicion y muestre 3 registro
   ?>
 </head>
 <body>
