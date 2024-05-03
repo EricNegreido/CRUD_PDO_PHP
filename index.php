@@ -54,7 +54,7 @@
     $base->exec("SET CHARACTER SET utf8");
 
     $tamaño_paginas = 3;
-    $pagina = 1;
+    $pagina = isset($_GET["pag"]) ? $_GET["pag"] : 1; 
     $empezar = ($pagina-1) * $tamaño_paginas;
     $sql_total = ("SELECT * FROM datos_usuarios"); // $registro tendra un array de objetosaa
     $resultado = $base->prepare($sql_total);
@@ -94,10 +94,16 @@
     <div><?php echo $registros["nombre"]?></div>
     <div><?php echo $registros["apellido"]?></div>
     <div><?php echo $registros["direccion"]?></div>
-    <a href="borrar.php?id=<?php echo $registro["id"]?>"><input class="btn" type="button" value="Borrar"></a>
-    <a href="editar.php?id=<?php echo $registro["id"]?>&nom=<?php echo $registros["nombre"]?>&ape=<?php echo $registros["apellido"]?> & dir='<?php echo $registros["direccion"]?>'"> <input class="btn" type="button" value="Actualizar"></a>
+    <a href="borrar.php?id=<?php echo $registros["id"]?>"><input class="btn" type="button" value="Borrar"></a>
+    <a href="editar.php?id=<?php echo $registros["id"]?>&nom=<?php echo $registros["nombre"]?>&ape=<?php echo $registros["apellido"]?> & dir='<?php echo $registros["direccion"]?>'"> <input class="btn" type="button" value="Actualizar"></a>
   </section>
- <?php endwhile ?>
+<?php endwhile;
+  for($i=1; $i<=$total_paginas; $i++){
+    echo "<a href='index.php?pag=$i'>" . $i . "</a>  ";
+  }
+?>
+
+
 
 </body>
 </html>
