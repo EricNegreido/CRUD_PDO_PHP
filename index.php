@@ -48,9 +48,28 @@
   </style>
 
   <?php 
-    include("conexion.php");      
-    $registros = $base->query("SELECT * FROM datos_usuarios LIMIT 0,3")->fetchAll(PDO::FETCH_OBJ); // $registro tendra un array de objetos
+    include("conexion.php");  
+
+    $base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $base->exec("SET CHARACTER SET utf8");
+
+    $tamaño_paginas = 3;
+    $pagina = 1;
+    $empezar = ($pagina-1) * $tamaño_paginas;
+    $sql_total = ("SELECT * FROM datos_usuarios"); // $registro tendra un array de objetosaa
+    $resultado = $base->prepare($sql_total);
+    $resultado->execute(array());
+    $num_filas = $resultado ->rowCount();
+
+    $total_paginas = ceil($num_filas/$tamaño_paginas);
+
+    $sql_limite= ("SELECT * FROM datos_usuarios LIMIT $empezar, $tamaño_paginas"); // $registro tendra un array de objetosaa
     //LIMIT 0, 3 Permite decidir cuanto elementos recupera la consulta siendo 0 la primero posicion y muestre 3 registro
+
+    $resultado = $base->prepare($sql_limite);
+
+    $resultado->execute(array());
+
   ?>
 </head>
 <body>
@@ -70,15 +89,15 @@
     </section>
     
   </form>
- <?php foreach ($registros as $usuario):?>
+ <?php while ($registros=$resultado->fetch(PDO::FETCH_ASSOC)):?>
   <section class="registro">
-    <div><?php echo $usuario->nombre?></div>
-    <div><?php echo $usuario->apellido?></div>
-    <div><?php echo $usuario->direccion?></div>
-    <a href="borrar.php?id=<?php echo $usuario->id?>"><input class="btn" type="button" value="Borrar"></a>
-    <a href="editar.php?id=<?php echo $usuario->id?>&nom=<?php echo $usuario->nombre?>&ape=<?php echo $usuario->apellido?> & dir='<?php echo $usuario->direccion?>'"> <input class="btn" type="button" value="Actualizar"></a>
+    <div><?php echo $registros["nombre"]?></div>
+    <div><?php echo $registros["apellido"]?></div>
+    <div><?php echo $registros["direccion"]?></div>
+    <a href="borrar.php?id=<?php echo $registro["id"]?>"><input class="btn" type="button" value="Borrar"></a>
+    <a href="editar.php?id=<?php echo $registro["id"]?>&nom=<?php echo $registros["nombre"]?>&ape=<?php echo $registros["apellido"]?> & dir='<?php echo $registros["direccion"]?>'"> <input class="btn" type="button" value="Actualizar"></a>
   </section>
- <?php endforeach ?>
+ <?php endwhile ?>
 
 </body>
 </html>
